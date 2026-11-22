@@ -1,10 +1,16 @@
 {
   "name": "Remedios de Amparo",
   "short_name": "Remedios",
+  "description": "Horario de remedios toma por toma, para ir marcando lo que ya se dio.",
+  "lang": "es",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#12324a",
-  "icons": [{ "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }]
+  "icons": [
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
 }

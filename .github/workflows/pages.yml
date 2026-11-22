@@ -1,0 +1,48 @@
+# Publica la app en GitHub Pages cada vez que se sube un cambio a main.
+# Activar una sola vez: Settings → Pages → Source: "GitHub Actions".
+name: Publicar en GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Revisar que los archivos estén bien
+        run: |
+          for f in index.html estilos.css app.js receta.js sw.js manifest.webmanifest icon-512.png; do
+            test -f "$f" || { echo "Falta $f"; exit 1; }
+          done
+          node --check app.js
+          node --check receta.js
+          node --check sw.js
+          node -e "JSON.parse(require('fs').readFileSync('manifest.webmanifest','utf8'))"
+
+      - name: Preparar solo los archivos de la app
+        run: |
+          mkdir _site
+          cp index.html estilos.css app.js receta.js sw.js manifest.webmanifest icon-512.png robots.txt .nojekyll _site/
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deploy
+        uses: actions/deploy-pages@v4

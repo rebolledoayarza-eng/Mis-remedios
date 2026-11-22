@@ -1,0 +1,146 @@
+/*
+  Remedios — estilos
+  Idea: la hoja de administración de medicamentos del hospital, pero tranquila.
+  Tinta azul #12324a sobre blanco, cielo #e4f1fa, coral solo para lo atrasado.
+*/
+
+/* ── Colores (claro por defecto) ───────────────────────────── */
+:root{
+  color-scheme:light;
+  --bg:#ffffff; --ink:#12324a; --soft:#5b7387; --field:#e4f1fa; --line:#d7e4ee;
+  --card:#ffffff; --blue:#1f6fb2; --done:#1f6fb2; --doneBg:#eef5fb;
+  --late:#f0584a; --lateInk:#c2372a; --lateBg:#fdecea; --navBg:rgba(255,255,255,.88);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme=light]){
+    color-scheme:dark;
+    --bg:#0d1b26; --ink:#e6f0f7; --soft:#9bb2c4; --field:#15293a; --line:#243b4f;
+    --card:#112333; --blue:#6db3ee; --done:#6db3ee; --doneBg:#16304a;
+    --late:#f0584a; --lateInk:#ff8a7e; --lateBg:#3a1d1d; --navBg:rgba(13,27,38,.88);
+  }
+}
+:root[data-theme=dark]{
+  color-scheme:dark;
+  --bg:#0d1b26; --ink:#e6f0f7; --soft:#9bb2c4; --field:#15293a; --line:#243b4f;
+  --card:#112333; --blue:#6db3ee; --done:#6db3ee; --doneBg:#16304a;
+  --late:#f0584a; --lateInk:#ff8a7e; --lateBg:#3a1d1d; --navBg:rgba(13,27,38,.88);
+}
+
+/* ── Base ──────────────────────────────────────────────────── */
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Figtree,system-ui,-apple-system,sans-serif;overflow-x:clip}
+h1,h2,h3,.time,.big{font-family:Outfit,Figtree,system-ui,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:0 max(4vw,16px)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ── Encabezado ────────────────────────────────────────────── */
+header{padding:28px 0 6px}
+h1{font-size:clamp(30px,6vw,42px);line-height:1.05;margin:0;font-weight:700;text-wrap:balance}
+.sub{color:var(--soft);margin:6px 0 0;font-size:15px}
+.prog{display:flex;align-items:center;gap:12px;margin-top:14px;font-size:14px;color:var(--soft)}
+.bar{flex:1;height:8px;border-radius:8px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--done);border-radius:8px;transition:width .4s}
+
+/* ── Navegación fija ───────────────────────────────────────── */
+nav.tabs{position:sticky;top:0;z-index:4;background:var(--navBg);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);margin-top:14px}
+nav.tabs .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:8px;scrollbar-width:none}
+nav.tabs a{flex:none;display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:20px;color:var(--ink);text-decoration:none;font-weight:600;font-size:15px;border:1.5px solid var(--line);background:var(--card)}
+nav.tabs a.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+section{scroll-margin-top:70px}
+h2{font-size:24px;margin:34px 0 12px;line-height:1.1}
+
+/* ── Próxima toma ──────────────────────────────────────────── */
+.next{background:var(--field);border-radius:22px;padding:22px clamp(16px,4vw,28px);margin:18px 0 8px}
+.next .lbl{font-size:14px;font-weight:600;color:var(--soft)}
+.next .row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.big{font-size:clamp(48px,13vw,76px);font-weight:700;line-height:1;letter-spacing:-.02em}
+.when{font-size:17px;font-weight:600;margin:0}
+.next.late .when{color:var(--lateInk)}
+.items{display:grid;gap:8px;margin-top:16px}
+
+/* ── Remedio (botón para marcar) ───────────────────────────── */
+.pill{display:flex;align-items:center;gap:12px;width:100%;min-height:58px;padding:10px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s,border-color .15s}
+.pill:active{transform:scale(.99)}
+.pill .ck{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--soft);display:grid;place-items:center}
+.pill .ck svg{width:16px;height:16px;opacity:0;color:var(--bg)}
+.pill.on{border-color:transparent;background:var(--doneBg)}
+.pill.on .ck{background:var(--done);border-color:var(--done)}
+.pill.on .ck svg{opacity:1}
+.pill.on .nm{text-decoration:line-through;text-decoration-color:var(--soft)}
+.pill.late:not(.on){border-color:var(--late);background:var(--lateBg)}
+.nm{font-weight:600;display:block}
+.dt{font-size:14px;color:var(--soft);display:block}
+.gv{margin-left:auto;font-size:13px;color:var(--soft);white-space:nowrap;text-align:right}
+.ord{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:12px;background:var(--blue);color:var(--bg);font-size:13px;font-weight:700;margin-right:6px;padding:0 6px}
+
+/* ── Botones ───────────────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 18px;border-radius:12px;border:0;background:var(--ink);color:var(--bg);font:600 15px Figtree,system-ui,sans-serif;cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--blue);border:1.5px solid var(--line)}
+.btn.warn{background:transparent;color:var(--lateInk);border:1.5px solid var(--late)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.link{background:none;border:0;padding:8px 0;min-height:44px;color:var(--blue);font:600 14px Figtree,system-ui,sans-serif;cursor:pointer;text-align:left}
+.note{display:block;color:var(--lateInk);text-decoration:underline;margin-top:8px}
+
+/* ── Día a día ─────────────────────────────────────────────── */
+.days{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px;scroll-snap-type:x proximity}
+.day{flex:none;width:62px;min-height:76px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);cursor:pointer;padding:8px 4px;scroll-snap-align:center;display:grid;justify-items:center;gap:2px}
+.day small{font-size:13px;color:var(--soft)}
+.day b{font:700 20px Outfit,system-ui,sans-serif}
+.day .mini{width:36px;height:4px;border-radius:4px;background:var(--line);overflow:hidden}
+.day .mini i{display:block;height:100%;background:var(--done)}
+.day.sel{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.day.sel small{color:inherit;opacity:.8}
+.day.today:not(.sel){border-color:var(--blue)}
+.day.hasLate .mini i{background:var(--late)}
+.dayhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:4px 0 6px}
+.dayhead p{margin:0;color:var(--soft);font-size:15px}
+.dayhead b{color:var(--ink)}
+.slot{display:grid;grid-template-columns:86px minmax(0,1fr);gap:12px;padding:14px 0;border-top:1px solid var(--line)}
+.slot .time{font-size:30px;font-weight:600;line-height:1.1;white-space:nowrap}
+.slot .time small{display:block;font:500 13px Figtree,system-ui,sans-serif;color:var(--soft);white-space:normal}
+.slot.past .time{color:var(--soft)}
+.slot.now .time{color:var(--blue)}
+
+/* ── Tratamiento ───────────────────────────────────────────── */
+.tip{background:var(--field);border-radius:16px;padding:14px 16px;margin:0 0 14px;font-size:15px}
+.tip b{font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:13px;color:var(--soft);font-weight:600}
+td.n{text-align:right;white-space:nowrap}
+.tbar{width:70px;height:6px;border-radius:6px;background:var(--line);display:inline-block;vertical-align:middle;margin-left:6px;overflow:hidden}
+.tbar i{display:block;height:100%;background:var(--done)}
+.fin{color:var(--soft)}
+
+/* ── Ajustes ───────────────────────────────────────────────── */
+.cards{display:grid;gap:12px}
+.card{border:1.5px solid var(--line);border-radius:18px;padding:16px 18px;background:var(--card)}
+.card h3{margin:0 0 4px;font-size:18px}
+.card p{margin:4px 0 0;color:var(--soft);font-size:14px}
+label{display:block;font-size:14px;color:var(--soft);margin:10px 0 6px}
+input[type=datetime-local]{font:16px Figtree,system-ui,sans-serif;min-height:46px;padding:0 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);max-width:100%}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:12px;padding:3px;gap:3px;margin-top:10px}
+.seg button{border:0;background:transparent;min-height:40px;padding:0 14px;border-radius:9px;font-weight:600;font-size:14px;cursor:pointer;color:var(--soft)}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+footer{font-size:13px;color:var(--soft);margin:30px 0 calc(40px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+/* ── Aviso flotante ────────────────────────────────────────── */
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translate(-50%,160%);display:flex;align-items:center;gap:14px;background:var(--ink);color:var(--bg);padding:12px 12px 12px 18px;border-radius:14px;width:max-content;max-width:min(92vw,520px);box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .35s;z-index:6;font-weight:500}
+.toast.show{transform:translate(-50%,0)}
+.toast button{flex:none;border:0;border-radius:10px;background:var(--bg);color:var(--ink);font-weight:700;min-height:38px;padding:0 12px;cursor:pointer}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.toast,.bar i,.pill{transition:none}}
+
+/* ── Teléfono ──────────────────────────────────────────────── */
+@media (max-width:600px){
+  table{font-size:14px}
+  .stack thead{display:none}
+  .stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}
+  .stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:7em;text-align:start}
+  .stack td::before{content:attr(data-l);float:inline-start;width:6.5em;margin-inline-start:-7em;color:var(--soft);font-size:13px}
+  .slot{grid-template-columns:70px minmax(0,1fr)}
+  .slot .time{font-size:24px}
+}
