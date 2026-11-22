@@ -1,0 +1,3 @@
+# App privada de salud: que no aparezca en buscadores
+User-agent: *
+Disallow: /
